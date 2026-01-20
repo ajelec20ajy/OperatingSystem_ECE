@@ -9,26 +9,26 @@ Lottery Scheduler : 프로세스마다 티켓을 뽑아, 당첨자를 선정해 
 
 [1] Phase 1
 
-  getreadcount() : 커널 부팅 이후 read() 시스템 콜이 호출된 총 횟수를 반환한다.
+   getreadcount() : 커널 부팅 이후 read() 시스템 콜이 호출된 총 횟수를 반환한다.
 
 
 [2] Phase 2
 
-  int settickets(int number) : 프로세스의 Lottery Scheduler를 위한 티켓 수를 설정한다.
+   int settickets(int number) : 프로세스의 Lottery Scheduler를 위한 티켓 수를 설정한다.
   
-  int getpinfo(struct pstat*) : 실행 중인 프로세스의 상태 정보를 기존의 것과 더불어 tickets, tick을 포함해 업데이트한다.
+   int getpinfo(struct pstat*) : 실행 중인 프로세스의 상태 정보를 기존의 것과 더불어 tickets, tick을 포함해 업데이트한다.
   
-  int fork() : 자식 프로세스가 부모의 티켓 수를 상속받게 한다.
+   int fork() : 자식 프로세스가 부모의 티켓 수를 상속받게 한다.
   
-  scheduler() : 스케줄링 알고리즘을 Lottery Scheduler 알고리즘으로 변경한다. 난수 함수 srand를 사용한다.
+   scheduler() : 스케줄링 알고리즘을 Lottery Scheduler 알고리즘으로 변경한다. 난수 함수 srand를 사용한다.
 
 
 [3] Phase 3 (*앞선 Phase들의 시스템 콜 사용/수정)
 
- int setuid(int uid) : 호출한 프로세스의 UID를 설정한다.
+  int setuid(int uid) : 호출한 프로세스의 UID를 설정한다.
  
- int fork() : 자식이 부모의 티켓수와 UID를 상속받게 한다.
+  int fork() : 자식이 부모의 티켓수와 UID를 상속받게 한다.
  
- int getpinfo(struct pstat*) : pstat 구조체에 기존의 것과 더불어 UID, tickets, tick을 포함해 업데이트한다.
+  int getpinfo(struct pstat*) : pstat 구조체에 기존의 것과 더불어 UID, tickets, tick을 포함해 업데이트한다.
  
- scheduler() : 2-Level Lottery Scheduler 알고리즘으로 변경한다. 프로세스의 그룹까지 포함해 티켓을 선정한다.
+  scheduler() : 2-Level Lottery Scheduler 알고리즘으로 변경한다. 프로세스의 그룹까지 포함해 티켓을 선정한다.
